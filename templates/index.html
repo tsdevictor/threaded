@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Threaded</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Threaded</h1>
+
+    <div class="intro-message" id="intro-message">
+      Discover where your audience hangs out on Reddit.
+    </div>
+
+    <div id="chat-container" class="messages"></div>
+  </div>
+
+  <div class="input-wrapper-container">
+    <form id="chat-form" method="post">
+      <div class="input-area">
+        <div class="input-wrapper">
+          <textarea name="product" id="product" rows="1" maxlength="500" placeholder="Describe your product..."></textarea>
+          <div class="char-counter" id="char-counter">0 / 500</div>
+        </div>
+        <button type="submit" class="send-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 10.5l16.5-6-6 16.5-2.625-7.875L3 10.5z" />
+          </svg>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

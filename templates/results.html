@@ -1,0 +1,46 @@
+<div class="messages">
+  {% if results and not results.error %}
+    <h2>Top Subreddits</h2>
+    <div class="card-grid">
+      {% for sub in results.subreddits %}
+        <div class="card">
+          <div class="card-header">
+            <a href="{{ sub.url }}" class="subreddit-name" target="_blank">r/{{ sub.name }}</a>
+            <span class="meta">
+              {{ sub.subscribers }} subscribers · 
+              Relevance: {{ "%.1f"|format(sub.relevance) }}/10
+            </span>
+            <p class="subreddit-description">{{ sub.description }}</p>
+          </div>
+          <div class="card-body">
+            <h4>Suggested post</h4>
+            <p class="suggestion-text">{{ sub.suggestion }}</p>            
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <h2>Top Posts</h2>
+    <div class="card-grid">
+      {% for post in results.hidden %}
+        <div class="card">
+          <div class="card-header">
+            <a href="{{ post.url }}" class="subreddit-name" target="_blank">r/{{ post.subreddit }}</a>
+            <span class="meta">
+              {{ post.score }} upvotes · {{ post.comments }} comments · 
+              Relevance: {{ "%.1f"|format(post.relevance) }}/10 · 
+              <span class="date">{{ post.relative_date }}</span>
+            </span>
+            <p class="subreddit-description">{{ post.title }}</p>
+          </div>
+          <div class="card-body">
+            <h4>Comment suggestion</h4>
+            <p class="suggestion-text">{{ post.suggestion }}</p>             
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% elif results and results.error %}
+    <div class="message assistant"><em>{{ results.error }}</em></div>
+  {% endif %}
+</div>
