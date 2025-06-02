@@ -1,11 +1,11 @@
 from core.reddit_scraper import search_posts, get_subreddit_context
-from core.relevance_ranker import rank_posts_with_embeddings
+from core.relevance_ranker import rank_posts
 from core.gpt import generate_post, get_search_terms
 from core.utils import get_relative_time
 
 def process_posts(product):
     posts_raw = search_posts(get_post_search_terms(product))
-    ranked = rank_posts_with_embeddings(product, posts_raw)
+    ranked = rank_posts(product, posts_raw)
     top_posts = []
 
     for idx, post in enumerate(ranked[:10]):

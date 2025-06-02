@@ -15,6 +15,7 @@ def classify_relevance_gpt(product, post):
     try:
         res = openai.chat.completions.create(
             model="gpt-3.5-turbo",
+            max_tokens=2,
             messages=[{"role": "user", "content": prompt}]
         )
         score = res.choices[0].message.content.strip()
@@ -47,6 +48,7 @@ def generate_post(product_description, context_posts=None, reply_to=None):
     try:
         res = openai.chat.completions.create(
             model="gpt-3.5-turbo",
+            max_tokens=200,
             messages=[{"role": "user", "content": prompt}]
         )
         return res.choices[0].message.content.strip()
@@ -79,6 +81,7 @@ def get_search_terms(product_description):
     try:
         res = openai.chat.completions.create(
             model="gpt-3.5-turbo",
+            max_tokens=40,
             messages=[{"role": "user", "content": prompt}]
         )
         content = res.choices[0].message.content.strip()

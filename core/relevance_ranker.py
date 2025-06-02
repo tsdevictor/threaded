@@ -7,7 +7,7 @@ import numpy as np
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
 
-def rank_posts_with_embeddings(product_desc, candidates, min_sim=0.6):
+def rank_posts(product_desc, candidates, min_sim=0.6):
     now = datetime.now(timezone.utc).timestamp()
     queries = [product_desc] + [f"{c['title']} {c.get('selftext', '')}" for c in candidates]
     
@@ -35,7 +35,7 @@ def rank_posts_with_embeddings(product_desc, candidates, min_sim=0.6):
 
 
 
-def rank_subreddits_with_embeddings(product_desc, candidates, text_key='description', min_sim=0.3):
+def rank_subreddits(product_desc, candidates, text_key='description', min_sim=0.3):
     queries = [product_desc] + [c.get(text_key, '') for c in candidates]
     vectors = model.encode(queries)
     similarities = cosine_similarity([vectors[0]], vectors[1:])[0]
