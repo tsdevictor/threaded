@@ -1,11 +1,10 @@
 from core.reddit_scraper import search_subreddits, get_subreddit_context
 from core.relevance_ranker import rank_subreddits
-from core.gpt import generate_post, get_search_terms
+from core.gpt import generate_post
 
 
-def process_subreddits(product):
+def process_subreddits(product, search_terms):
     top_subs = []
-    search_terms = get_subreddit_search_terms(product)
     subreddits_raw = search_subreddits(search_terms)
 
     if not subreddits_raw:
@@ -26,6 +25,3 @@ def process_subreddits(product):
         })
 
     return top_subs
-
-def get_subreddit_search_terms(product):
-    return get_search_terms(product)

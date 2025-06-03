@@ -1,14 +1,19 @@
 from core.reddit_scraper import search_posts, get_subreddit_context
 from core.relevance_ranker import rank_posts
-from core.gpt import generate_post, get_search_terms
+from core.gpt import generate_post
 from core.utils import get_relative_time
 
-def process_posts(product):
-    posts_raw = search_posts(get_post_search_terms(product))
-    ranked = rank_posts(product, posts_raw)
-    top_posts = []
 
-    for idx, post in enumerate(ranked[:10]):
+def process_posts(product, search_terms):
+    top_posts = []
+    posts_raw = search_posts(search_terms)
+    
+    if not posts_raw:
+        return top_posts
+    
+    ranked = rank_posts(product, posts_raw) 
+
+    for post in ranked[:10]:
         context_posts = get_subreddit_context(post['subreddit'])
         suggestion = generate_post(product, context_posts=context_posts, reply_to=post)
 
@@ -24,6 +29,3 @@ def process_posts(product):
         })
 
     return top_posts
-
-def get_post_search_terms(product):
-    return get_search_terms(product)
