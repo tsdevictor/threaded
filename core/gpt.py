@@ -2,7 +2,7 @@ import openai
 from openai import OpenAIError, OpenAI
 import logging
 from config.config import OPENAI_API_KEY
-import time
+# import time
 
 
 openai.api_key = OPENAI_API_KEY
@@ -41,7 +41,7 @@ def classify_relevance_gpt(product, post):
  
 
 def generate_post(product_description, context_posts=None, reply_to=None):
-    start = time.process_time()
+    # start = time.process_time()
     prompt_parts = []
 
     if context_posts:
@@ -61,7 +61,7 @@ def generate_post(product_description, context_posts=None, reply_to=None):
         input=prompt
     )
 
-    print(f'Post generation: {time.process_time() - start}')
+    # print(f'Post generation: {time.process_time() - start}')
 
     return post
 
