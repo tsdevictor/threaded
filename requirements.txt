@@ -8,3 +8,4 @@ prawcore
 python-dotenv
 scikit-learn
 sentence-transformers
+pytest
