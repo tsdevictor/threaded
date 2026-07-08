@@ -58,7 +58,7 @@ def generate_post(product_description, context_posts=None, reply_to=None):
     )
     prompt_parts.append(
         "Do not write a fake testimonial, advertisement, or astroturfed Reddit post. "
-        "Instead, explain in 2-4 sentences why this community might care about the product, "
+        "Instead, explain in 2 concise sentences why this community might care about the product, "
         "what pain point the product appears to match, and one natural question the founder could ask to learn from the community. "
         "Keep it specific, non-promotional, and useful for audience research."
     )
