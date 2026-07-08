@@ -8,21 +8,68 @@ The goal is not to automate posting or spam communities. Threaded is designed to
 
 ## Demo
 
-![Threaded ranking relevant Reddit communities for a sample pickup-sports app](screenshots/threaded-demo.png)
+![Threaded ranking relevant Reddit communities for a sample study-group app](screenshots/threaded-demo.png)
+
+## Overview
+
+Threaded helps answer questions like:
+
+- Where are people already talking about this problem?
+- Which subreddits are most relevant to this product?
+- Which communities are active enough to be worth researching?
+- What pain points are users expressing?
+- How could a founder ask useful, non-promotional questions in those communities?
+
+The app takes a product description, searches Reddit, ranks candidate communities and posts, and displays a shortlist of relevant subreddits with community insights.
+
+## Architecture
+
+```mermaid
+flowchart TD
+    A[Product description] --> B[GPT search-term generation]
+    B --> C[Reddit search via PRAW]
+    C --> D[Subreddit and post parsing]
+    D --> E[Ranking pipeline]
+    E --> F[GPT relevance and community insight generation]
+    F --> G[Flask route]
+    G --> H[HTML/CSS/JavaScript frontend]
+```
+
+## Ranking formula
+
+Threaded ranks candidate communities using a weighted combination of relevance, engagement, recency, and receptiveness signals.
+
+```text
+score =
+  0.55 * relevance_score +
+  0.20 * engagement_score +
+  0.15 * recency_score +
+  0.10 * receptiveness_score
+```
+
+Where:
+
+- `relevance_score` estimates how closely the subreddit or post matches the product description.
+- `engagement_score` rewards communities and posts with stronger activity signals.
+- `recency_score` rewards recent posts and active discussions.
+- `receptiveness_score` estimates whether the community appears open to discussion around the product's problem space.
+
+The formula is intentionally simple and interpretable. Threaded prioritizes explainable ranking over opaque recommendation behavior.
 
 ## Features
 
-- Generates Reddit search terms from a product description
+- Generates Reddit-style search terms from a product description
 - Searches Reddit for relevant subreddits and posts using PRAW
-- Ranks communities using relevance, engagement, recency, and receptiveness signals
+- Parses subreddit metadata and post-level engagement signals
+- Ranks communities using relevance, engagement, recency, and receptiveness
 - Uses GPT to classify post relevance and generate community insights
 - Provides a lightweight Flask web interface for exploring results
-- Includes CSRF protection, input sanitization, rate limiting, and environment-based secret management
+- Uses environment variables for local secret management
 
 ## Example input
 
 ```text
-A mobile app that helps college students find last-minute pickup soccer, basketball, and volleyball games near campus. Users can post games, see who is joining, and get notified when enough people are nearby to play.
+A web app that helps college students find study groups, organize exam prep sessions, and share class-specific resources.
 ```
 
 ## Tech stack
@@ -35,14 +82,6 @@ A mobile app that helps college students find last-minute pickup soccer, basketb
 - scikit-learn
 - python-dotenv
 - HTML/CSS/JavaScript
-
-## How it works
-
-1. The user enters a product description.
-2. GPT generates short Reddit-style search terms related to the product.
-3. The backend searches Reddit for matching subreddits and posts.
-4. Posts and communities are scored using relevance, engagement, recency, and tone/receptiveness signals.
-5. The app displays ranked subreddit recommendations and community insights.
 
 ## Setup
 
@@ -97,6 +136,7 @@ OPENAI_API_KEY=your_openai_api_key
 REDDIT_CLIENT_ID=your_reddit_client_id
 REDDIT_CLIENT_SECRET=your_reddit_client_secret
 REDDIT_USER_AGENT=threaded/0.1 by your_username
+SECRET_KEY=replace_with_a_random_secret_key
 ```
 
 Do not commit your real `.env` file. The committed `.env.example` file should contain only placeholder values.
@@ -111,10 +151,26 @@ threaded/
   static/        frontend JavaScript and CSS
   templates/     HTML templates
   screenshots/   demo screenshots
+tests/           unit tests for ranking and parsing logic
 ```
 
-## Notes
+## Security and privacy notes
 
-Threaded is intended for audience research and market validation, not automated promotion. Any generated insight should be reviewed by a human before engaging with a Reddit community.
+- API keys are loaded from local environment variables and should never be committed.
+- `.env.example` documents required variables using placeholder values only.
+- User input is handled through the Flask backend before being sent to external APIs.
+- The app is intended for local development and research workflows, not production deployment.
+- Generated community insights should be reviewed by a human before engaging with any community.
 
-The app currently uses local Flask development settings and in-memory rate limiting. It is not configured for production deployment.
+## Limitations
+
+- Reddit API behavior is subject to rate limits and availability.
+- Search results depend on subreddit metadata, post content, and Reddit's own ranking behavior.
+- GPT-generated relevance judgments may be noisy and should not be treated as ground truth.
+- Subreddit norms vary widely; a relevant community is not necessarily an appropriate place to post.
+- Threaded does not automate Reddit posting and should not be used for spam, astroturfing, or deceptive promotion.
+- The current app uses local Flask development settings and is not configured for production deployment.
+
+## License
+
+MIT License.
