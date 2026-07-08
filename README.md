@@ -1,10 +1,10 @@
 # Threaded
 
-Threaded is a Reddit audience-research tool for discovering communities where potential users are already discussing problems related to a product idea.
+Threaded is a Reddit audience-research tool for audience research: discovering communities where potential users are already discussing problems related to a product idea.
 
 Given a short product description, Threaded generates Reddit-style search terms, searches for relevant subreddits and posts, ranks communities by relevance and engagement signals, and surfaces community insights that help founders understand where their product may fit naturally.
 
-The goal is not to automate posting or spam communities. Threaded is designed to help builders identify relevant conversations, understand user pain points, and engage thoughtfully.
+The goal is not to automate posting or spam communities. Threaded is designed to help builders identify relevant conversations, understand user pain points, and learn from those communities thoughtfully.
 
 ## Demo
 
