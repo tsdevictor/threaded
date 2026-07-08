@@ -54,10 +54,13 @@ def generate_post(product_description, context_posts=None, reply_to=None):
         prompt_parts.append(f'You are replying to this post: "{reply_to}"')
 
     prompt_parts.append(
-        f"Write a short, natural Reddit post relating to this product to promote it: {product_description}"
+        f"Write a brief community insight for this product: {product_description}"
     )
     prompt_parts.append(
-        "Don't use emojis or any extra symbols. Make the promotion subtle; it need not be direct. Talk like a real Reddit user. Don't sound generic. Include a specific anecdote of using the product maybe."
+        "Do not write a fake testimonial, advertisement, or astroturfed Reddit post. "
+        "Instead, explain in 2-4 sentences why this community might care about the product, "
+        "what pain point the product appears to match, and one natural question the founder could ask to learn from the community. "
+        "Keep it specific, non-promotional, and useful for audience research."
     )
 
     prompt = "\n\n".join(prompt_parts)
