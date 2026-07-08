@@ -32,6 +32,12 @@ document.addEventListener("DOMContentLoaded", function () {
     charCounter.innerText = `${textarea.value.length} / ${textarea.maxLength}`;
   });
 
+  textarea.addEventListener("focus", () => {
+    setTimeout(() => {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    }, 300);
+  });
+
   function setLoadingState(loading) {
     isLoading = loading;
     textarea.disabled = loading;

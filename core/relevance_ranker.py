@@ -11,9 +11,8 @@ def rank_posts(product_desc, candidates, min_sim=0.6):
     now = datetime.now(timezone.utc).timestamp()
     queries = [product_desc] + [f"{c['title']} {c.get('selftext', '')}" for c in candidates]
     
-    vectors = model.encode(queries, normalize_embeddings=True)
-    similarities = np.dot(vectors[1:], vectors[0])
-    # similarities = cosine_similarity([vectors[0]], vectors[1:])[0]
+    vectors = model.encode(queries)
+    similarities = cosine_similarity([vectors[0]], vectors[1:])[0]
 
     ranked = []
     for i, sim in enumerate(similarities):
